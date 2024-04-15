@@ -1,0 +1,25 @@
+import express from "express";
+// importando a biblioteca instalada com os metodos da mesma 
+
+import conectaNaDataBase from "./config/dbConnect.js";
+import routes from "./routes/index.js";
+
+const conexao = await conectaNaDataBase();
+
+conexao.on("error", (erro)=> {
+    console.error("erro de conexão", erro)
+})
+
+conexao.once("open", ()=>{
+    console.log("conexão com o banco feita com sucesso")
+})
+
+const app = express()
+// executo a função express() dentro da variavel app
+routes(app);
+
+
+
+
+// exporto o app (modulo)
+export default app;
